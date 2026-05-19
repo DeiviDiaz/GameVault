@@ -4,6 +4,18 @@ export function renderGames(games) {
 
     gamesContainer.innerHTML = "";
 
+    if (games.length === 0) {
+
+        gamesContainer.innerHTML = `
+            <div class="col-12 text-center">
+                <h2>No se encontraron videojuegos</h2>
+            </div>
+        `;
+
+        return;
+
+    }
+
     games.forEach((game) => {
 
         const gameCard = document.createElement("div");
@@ -15,7 +27,7 @@ export function renderGames(games) {
             <article class="game-card">
 
                 <img
-                    src="${game.image}"
+                    src="${game.thumbnail}"
                     alt="${game.title}"
                     class="game-image"
                 >
