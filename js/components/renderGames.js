@@ -1,3 +1,5 @@
+import { openGameModal } from "./renderModal.js";
+
 const gamesContainer = document.querySelector("#gamesContainer");
 
 export function renderGames(games) {
@@ -42,7 +44,10 @@ export function renderGames(games) {
                         ${game.genre}
                     </p>
 
-                    <button class="details-btn">
+                    <button
+                        class="details-btn"
+                        data-id="${game.id}"
+                    >
                         Ver detalles
                     </button>
 
@@ -50,6 +55,13 @@ export function renderGames(games) {
 
             </article>
         `;
+
+        const detailsBtn =
+            gameCard.querySelector(".details-btn");
+
+        detailsBtn.addEventListener("click", () => {
+            openGameModal(game);
+        });
 
         gamesContainer.appendChild(gameCard);
 
