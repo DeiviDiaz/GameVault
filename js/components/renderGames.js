@@ -1,6 +1,12 @@
 import { openGameModal } from "./renderModal.js";
 
-const gamesContainer = document.querySelector("#gamesContainer");
+import { state } from "../state/state.js";
+
+import { saveFavorites }
+    from "../services/storage.js";
+
+const gamesContainer =
+    document.querySelector("#gamesContainer");
 
 export function renderGames(games) {
 
@@ -20,7 +26,13 @@ export function renderGames(games) {
 
     games.forEach((game) => {
 
-        const gameCard = document.createElement("div");
+        const isFavorite =
+            state.favorites.some(
+                favorite => favorite.id === game.id
+            );
+
+        const gameCard =
+            document.createElement("div");
 
         gameCard.classList.add("col-md-6");
         gameCard.classList.add("col-lg-3");
@@ -44,12 +56,21 @@ export function renderGames(games) {
                         ${game.genre}
                     </p>
 
-                    <button
-                        class="details-btn"
-                        data-id="${game.id}"
-                    >
-                        Ver detalles
-                    </button>
+                    <div class="d-flex gap-2">
+
+                        <button
+                            class="details-btn flex-grow-1"
+                        >
+                            Ver detalles
+                        </button>
+
+                        <button
+                            class="favorite-btn"
+                        >
+                            ${isFavorite ? "★" : "☆"}
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -63,8 +84,52 @@ export function renderGames(games) {
             openGameModal(game);
         });
 
+        const favoriteBtn =
+            gameCard.querySelector(".favorite-btn");
+
+        favoriteBtn.addEventListener("click", () => {
+
+            toggleFavorite(game);
+
+        });
+
         gamesContainer.appendChild(gameCard);
 
     });
+
+}
+
+function toggleFavorite(game) {
+
+    const alreadyExists =
+        state.favorites.some(
+            favorite => favorite.id === game.id
+        );
+
+    if (alreadyExists) {
+
+        state.favorites =
+            state.favorites.filter(
+                favorite => favorite.id !== game.id
+            );
+
+    } else {
+
+        state.favorites.push(game);
+
+    }
+
+    saveFavorites(state.favorites);
+
+    renderGames(state.favorites.length > 0
+        ? [...state.favorites,
+           ...window.allGames.filter(
+               game =>
+               !state.favorites.some(
+                   fav => fav.id === game.id
+               )
+           )]
+        : window.allGames
+    );
 
 }

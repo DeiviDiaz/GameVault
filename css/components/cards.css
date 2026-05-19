@@ -81,3 +81,23 @@
 .load-more-btn:hover {
     opacity: 0.8;
 }
+
+.favorite-btn {
+    width: 50px;
+
+    border: none;
+
+    border-radius: var(--border-radius);
+
+    background-color: #facc15;
+
+    font-size: 1.3rem;
+
+    cursor: pointer;
+
+    transition: transform var(--transition-speed);
+}
+
+.favorite-btn:hover {
+    transform: scale(1.05);
+}

@@ -2,31 +2,26 @@ import { fetchGames } from "./api/gamesApi.js";
 
 import { renderGames } from "./components/renderGames.js";
 
-import {
-    showLoader,
-    hideLoader
-} from "./components/loader.js";
+import { showLoader, hideLoader } from "./components/loader.js";
 
 const searchInput = document.querySelector(".search-input");
 
 const loadMoreBtn = document.querySelector("#loadMoreBtn");
 
-let allGames = [];
+window.allGames = [];
 
 let visibleGames = 12;
 
 async function initApp() {
+  showLoader();
 
-    showLoader();
+  const games = await fetchGames();
 
-    const games = await fetchGames();
+  window.allGames = games;
 
-    allGames = games;
+  renderGames(window.allGames.slice(0, visibleGames));
 
-    renderGames(allGames.slice(0, visibleGames));
-
-    hideLoader();
-
+  hideLoader();
 }
 
 searchInput.addEventListener("input", handleSearch);
@@ -34,37 +29,25 @@ searchInput.addEventListener("input", handleSearch);
 loadMoreBtn.addEventListener("click", loadMoreGames);
 
 function handleSearch(event) {
+  const searchTerm = event.target.value.toLowerCase();
 
-    const searchTerm = event.target.value.toLowerCase();
+  const filteredGames = window.allGames.filter((game) => {
+    return game.title.toLowerCase().includes(searchTerm);
+  });
 
-    const filteredGames = allGames.filter((game) => {
-
-        return game.title
-            .toLowerCase()
-            .includes(searchTerm);
-
-    });
-
-    renderGames(filteredGames.slice(0, visibleGames));
-
+  renderGames(filteredGames.slice(0, visibleGames));
 }
 
 function loadMoreGames() {
+  visibleGames += 12;
 
-    visibleGames += 12;
+  const searchTerm = searchInput.value.toLowerCase();
 
-    const searchTerm = searchInput.value.toLowerCase();
+  const filteredGames = window.allGames.filter((game) => {
+    return game.title.toLowerCase().includes(searchTerm);
+  });
 
-    const filteredGames = allGames.filter((game) => {
-
-        return game.title
-            .toLowerCase()
-            .includes(searchTerm);
-
-    });
-
-    renderGames(filteredGames.slice(0, visibleGames));
-
+  renderGames(filteredGames.slice(0, visibleGames));
 }
 
 initApp();
