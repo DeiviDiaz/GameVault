@@ -59,3 +59,25 @@
 .details-btn:hover {
     opacity: 0.8;
 }
+
+.load-more-btn {
+    border: none;
+
+    padding: 14px 28px;
+
+    border-radius: var(--border-radius);
+
+    background-color: var(--accent-color);
+
+    color: black;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: opacity var(--transition-speed);
+}
+
+.load-more-btn:hover {
+    opacity: 0.8;
+}

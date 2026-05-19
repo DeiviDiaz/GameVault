@@ -9,7 +9,11 @@ import {
 
 const searchInput = document.querySelector(".search-input");
 
+const loadMoreBtn = document.querySelector("#loadMoreBtn");
+
 let allGames = [];
+
+let visibleGames = 12;
 
 async function initApp() {
 
@@ -19,13 +23,15 @@ async function initApp() {
 
     allGames = games;
 
-    renderGames(allGames);
+    renderGames(allGames.slice(0, visibleGames));
 
     hideLoader();
 
 }
 
 searchInput.addEventListener("input", handleSearch);
+
+loadMoreBtn.addEventListener("click", loadMoreGames);
 
 function handleSearch(event) {
 
@@ -39,7 +45,25 @@ function handleSearch(event) {
 
     });
 
-    renderGames(filteredGames);
+    renderGames(filteredGames.slice(0, visibleGames));
+
+}
+
+function loadMoreGames() {
+
+    visibleGames += 12;
+
+    const searchTerm = searchInput.value.toLowerCase();
+
+    const filteredGames = allGames.filter((game) => {
+
+        return game.title
+            .toLowerCase()
+            .includes(searchTerm);
+
+    });
+
+    renderGames(filteredGames.slice(0, visibleGames));
 
 }
 

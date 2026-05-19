@@ -13,7 +13,7 @@ export async function fetchGames() {
 
         const data = await response.json();
 
-        return data.slice(0, 12);
+        return data;
 
     } catch (error) {
 
