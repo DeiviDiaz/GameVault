@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.hero-section {
+    padding: 120px 0;
+
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+.hero-text {
+    font-size: 1.2rem;
+
+    color: var(--text-secondary);
+}
+
+.search-input {
+    padding: 14px;
+
+    border-radius: var(--border-radius);
+}
+
+.footer {
+    padding: 30px 0;
+
+    text-align: center;
+
+    background-color: var(--bg-secondary);
+}
