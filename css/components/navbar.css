@@ -46,3 +46,14 @@
 .theme-toggle-btn:hover {
     transform: scale(1.05);
 }
+
+.navbar {
+
+    backdrop-filter: blur(12px);
+
+    background-color:
+        rgba(15, 23, 42, 0.85) !important;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.05);
+}

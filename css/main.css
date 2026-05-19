@@ -75,3 +75,7 @@ body {
         background-color var(--transition-speed),
         color var(--transition-speed);
 }
+
+html {
+    scroll-behavior: smooth;
+}
