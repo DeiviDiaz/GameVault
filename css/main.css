@@ -65,3 +65,13 @@ a {
 
     box-shadow: none;
 }
+
+body {
+    background-color: var(--bg-primary);
+
+    color: var(--text-primary);
+
+    transition:
+        background-color var(--transition-speed),
+        color var(--transition-speed);
+}

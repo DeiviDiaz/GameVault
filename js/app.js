@@ -2,39 +2,36 @@ import { fetchGames } from "./api/gamesApi.js";
 
 import { renderGames } from "./components/renderGames.js";
 
-import {
-    showLoader,
-    hideLoader
-} from "./components/loader.js";
+import { initializeTheme, toggleTheme } from "./utils/helpers.js";
 
-const searchInput =
-    document.querySelector(".search-input");
+import { showLoader, hideLoader } from "./components/loader.js";
 
-const loadMoreBtn =
-    document.querySelector("#loadMoreBtn");
+const searchInput = document.querySelector(".search-input");
 
-const genreFilter =
-    document.querySelector("#genreFilter");
+const loadMoreBtn = document.querySelector("#loadMoreBtn");
 
-const platformFilter =
-    document.querySelector("#platformFilter");
+const genreFilter = document.querySelector("#genreFilter");
+
+const platformFilter = document.querySelector("#platformFilter");
+
+const themeToggle = document.querySelector("#themeToggle");
 
 window.allGames = [];
 
 let visibleGames = 12;
 
 async function initApp() {
+  initializeTheme();
 
-    showLoader();
+  showLoader();
 
-    const games = await fetchGames();
+  const games = await fetchGames();
 
-    window.allGames = games;
+  window.allGames = games;
 
-    applyFilters();
+  applyFilters();
 
-    hideLoader();
-
+  hideLoader();
 }
 
 searchInput.addEventListener("input", applyFilters);
@@ -43,57 +40,35 @@ genreFilter.addEventListener("change", applyFilters);
 
 platformFilter.addEventListener("change", applyFilters);
 
+themeToggle.addEventListener("click", toggleTheme);
+
 loadMoreBtn.addEventListener("click", loadMoreGames);
 
 function applyFilters() {
+  const searchTerm = searchInput.value.toLowerCase();
 
-    const searchTerm =
-        searchInput.value.toLowerCase();
+  const selectedGenre = genreFilter.value;
 
-    const selectedGenre =
-        genreFilter.value;
+  const selectedPlatform = platformFilter.value;
 
-    const selectedPlatform =
-        platformFilter.value;
+  let filteredGames = window.allGames.filter((game) => {
+    const matchesSearch = game.title.toLowerCase().includes(searchTerm);
 
-    let filteredGames =
-        window.allGames.filter((game) => {
+    const matchesGenre = selectedGenre === "" || game.genre === selectedGenre;
 
-            const matchesSearch =
-                game.title
-                    .toLowerCase()
-                    .includes(searchTerm);
+    const matchesPlatform =
+      selectedPlatform === "" || game.platform.includes(selectedPlatform);
 
-            const matchesGenre =
-                selectedGenre === "" ||
-                game.genre === selectedGenre;
+    return matchesSearch && matchesGenre && matchesPlatform;
+  });
 
-            const matchesPlatform =
-                selectedPlatform === "" ||
-                game.platform.includes(
-                    selectedPlatform
-                );
-
-            return (
-                matchesSearch &&
-                matchesGenre &&
-                matchesPlatform
-            );
-
-        });
-
-    renderGames(
-        filteredGames.slice(0, visibleGames)
-    );
-
+  renderGames(filteredGames.slice(0, visibleGames));
 }
 
 function loadMoreGames() {
+  visibleGames += 12;
 
-    visibleGames += 12;
-
-    applyFilters();
-
+  applyFilters();
 }
 
 initApp();

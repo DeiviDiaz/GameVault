@@ -24,3 +24,25 @@
 .nav-link:hover {
     color: white;
 }
+
+.theme-toggle-btn {
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background-color: var(--bg-secondary);
+
+    color: var(--text-primary);
+
+    cursor: pointer;
+
+    transition: transform var(--transition-speed);
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.05);
+}
