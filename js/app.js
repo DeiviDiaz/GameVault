@@ -2,52 +2,98 @@ import { fetchGames } from "./api/gamesApi.js";
 
 import { renderGames } from "./components/renderGames.js";
 
-import { showLoader, hideLoader } from "./components/loader.js";
+import {
+    showLoader,
+    hideLoader
+} from "./components/loader.js";
 
-const searchInput = document.querySelector(".search-input");
+const searchInput =
+    document.querySelector(".search-input");
 
-const loadMoreBtn = document.querySelector("#loadMoreBtn");
+const loadMoreBtn =
+    document.querySelector("#loadMoreBtn");
+
+const genreFilter =
+    document.querySelector("#genreFilter");
+
+const platformFilter =
+    document.querySelector("#platformFilter");
 
 window.allGames = [];
 
 let visibleGames = 12;
 
 async function initApp() {
-  showLoader();
 
-  const games = await fetchGames();
+    showLoader();
 
-  window.allGames = games;
+    const games = await fetchGames();
 
-  renderGames(window.allGames.slice(0, visibleGames));
+    window.allGames = games;
 
-  hideLoader();
+    applyFilters();
+
+    hideLoader();
+
 }
 
-searchInput.addEventListener("input", handleSearch);
+searchInput.addEventListener("input", applyFilters);
+
+genreFilter.addEventListener("change", applyFilters);
+
+platformFilter.addEventListener("change", applyFilters);
 
 loadMoreBtn.addEventListener("click", loadMoreGames);
 
-function handleSearch(event) {
-  const searchTerm = event.target.value.toLowerCase();
+function applyFilters() {
 
-  const filteredGames = window.allGames.filter((game) => {
-    return game.title.toLowerCase().includes(searchTerm);
-  });
+    const searchTerm =
+        searchInput.value.toLowerCase();
 
-  renderGames(filteredGames.slice(0, visibleGames));
+    const selectedGenre =
+        genreFilter.value;
+
+    const selectedPlatform =
+        platformFilter.value;
+
+    let filteredGames =
+        window.allGames.filter((game) => {
+
+            const matchesSearch =
+                game.title
+                    .toLowerCase()
+                    .includes(searchTerm);
+
+            const matchesGenre =
+                selectedGenre === "" ||
+                game.genre === selectedGenre;
+
+            const matchesPlatform =
+                selectedPlatform === "" ||
+                game.platform.includes(
+                    selectedPlatform
+                );
+
+            return (
+                matchesSearch &&
+                matchesGenre &&
+                matchesPlatform
+            );
+
+        });
+
+    renderGames(
+        filteredGames.slice(0, visibleGames)
+    );
+
 }
 
 function loadMoreGames() {
-  visibleGames += 12;
 
-  const searchTerm = searchInput.value.toLowerCase();
+    visibleGames += 12;
 
-  const filteredGames = window.allGames.filter((game) => {
-    return game.title.toLowerCase().includes(searchTerm);
-  });
+    applyFilters();
 
-  renderGames(filteredGames.slice(0, visibleGames));
 }
 
 initApp();

@@ -47,3 +47,21 @@ a {
 
     background-color: var(--bg-secondary);
 }
+
+.custom-filter {
+    background-color: var(--bg-secondary);
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    color: white;
+}
+
+.custom-filter:focus {
+    background-color: var(--bg-secondary);
+
+    color: white;
+
+    border-color: var(--accent-color);
+
+    box-shadow: none;
+}
