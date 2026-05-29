@@ -13,13 +13,13 @@ export async function fetchGames() {
 
         const data = await response.json();
 
-        return data;
+        return { ok: true, data };
 
     } catch (error) {
 
         console.error(error);
 
-        return [];
+        return { ok: false, data: [] };
 
     }
 

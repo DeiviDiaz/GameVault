@@ -1,77 +1,147 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  transition:
+    background-color var(--transition-speed),
+    color var(--transition-speed);
 
-    font-family: Arial, Helvetica, sans-serif;
+  /* Textura de fondo sutil */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,212,255,0.06) 0%, transparent 70%);
 }
 
-a {
-    text-decoration: none;
-}
+a { text-decoration: none; }
 
+html { scroll-behavior: smooth; }
+
+/* ── HERO ──────────────────────────────────── */
 .hero-section {
-    padding: 120px 0;
+  padding: 130px 0 100px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
 
-    text-align: center;
+/* Partículas decorativas detrás del hero */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle 600px at 30% 50%, rgba(0,212,255,0.04) 0%, transparent 70%),
+    radial-gradient(circle 400px at 70% 40%, rgba(255,77,109,0.04) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .hero-title {
-    font-size: 4rem;
-    font-weight: bold;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 18px;
 
-    margin-bottom: 20px;
+  /* Gradiente en el texto */
+  background: linear-gradient(135deg, #ffffff 30%, var(--accent-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-text {
-    font-size: 1.2rem;
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  max-width: 480px;
+  margin: 0 auto;
+}
 
-    color: var(--text-secondary);
+/* ── SEARCH ────────────────────────────────── */
+.search-section {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto 2rem;
 }
 
 .search-input {
-    padding: 14px;
-
-    border-radius: var(--border-radius);
+  padding: 14px 18px 14px 48px;
+  border-radius: var(--border-radius);
+  background: var(--bg-secondary);
+  border: var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition:
+    border-color var(--transition-speed),
+    box-shadow var(--transition-speed);
+  width: 100%;
 }
 
-.footer {
-    padding: 30px 0;
-
-    text-align: center;
-
-    background-color: var(--bg-secondary);
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  background: var(--bg-card);
 }
 
+.search-input::placeholder { color: var(--text-muted); }
+
+/* Ícono de búsqueda inyectado via ::before en el wrapper */
+.search-section::before {
+  content: '⌕';
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── FILTROS ───────────────────────────────── */
 .custom-filter {
-    background-color: var(--bg-secondary);
-
-    border: 1px solid rgba(255,255,255,0.1);
-
-    color: white;
+  background: var(--bg-secondary);
+  border: var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  border-radius: var(--border-radius);
+  padding: 10px 14px;
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+  cursor: pointer;
 }
 
 .custom-filter:focus {
-    background-color: var(--bg-secondary);
-
-    color: white;
-
-    border-color: var(--accent-color);
-
-    box-shadow: none;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  outline: none;
 }
 
-body {
-    background-color: var(--bg-primary);
+.custom-filter option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
 
-    color: var(--text-primary);
-
-    transition:
-        background-color var(--transition-speed),
-        color var(--transition-speed);
+/* ── FOOTER ────────────────────────────────── */
+.footer {
+  padding: 32px 0;
+  text-align: center;
+  background: var(--bg-secondary);
+  border-top: var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
 }
