@@ -1,0 +1,40 @@
+/* Animación de entrada para secciones */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-section { animation: fadeUp 0.7s var(--transition-smooth) both; }
+.hero-title   { animation: fadeUp 0.7s 0.1s var(--transition-smooth) both; }
+.hero-text    { animation: fadeUp 0.7s 0.2s var(--transition-smooth) both; }
+.search-section { animation: fadeUp 0.7s 0.3s var(--transition-smooth) both; }
+
+/* Stagger en las tarjetas (aplicado por JS, ver sección JS) */
+.col-md-6.col-lg-3:nth-child(1)  .game-card { animation-delay: 0.05s; }
+.col-md-6.col-lg-3:nth-child(2)  .game-card { animation-delay: 0.10s; }
+.col-md-6.col-lg-3:nth-child(3)  .game-card { animation-delay: 0.15s; }
+.col-md-6.col-lg-3:nth-child(4)  .game-card { animation-delay: 0.20s; }
+.col-md-6.col-lg-3:nth-child(5)  .game-card { animation-delay: 0.05s; }
+.col-md-6.col-lg-3:nth-child(6)  .game-card { animation-delay: 0.10s; }
+.col-md-6.col-lg-3:nth-child(7)  .game-card { animation-delay: 0.15s; }
+.col-md-6.col-lg-3:nth-child(8)  .game-card { animation-delay: 0.20s; }
+
+/* Reducción de movimiento para accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Animación pop del favorito */
+@keyframes favPop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.4) rotate(10deg); }
+    70%  { transform: scale(0.9) rotate(-5deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.fav-pop {
+    animation: favPop 0.4s var(--transition-bounce) both;
+}
